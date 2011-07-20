@@ -1,6 +1,6 @@
 ﻿namespace StingyPrice.DAL.Models
 {
-    public class IModel
+    public interface IModel
     {
         string Id { get; set; }
     }

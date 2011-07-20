@@ -26,7 +26,9 @@ namespace StingyPrice {
 
     }
 
+// ReSharper disable InconsistentNaming
     protected void Application_Start() {
+// ReSharper restore InconsistentNaming
       AreaRegistration.RegisterAllAreas();
 
       RegisterGlobalFilters(GlobalFilters.Filters);
