@@ -82,6 +82,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="DAL\Repositories\RavenRepository.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\CategoryTree.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductGroup.cs" />

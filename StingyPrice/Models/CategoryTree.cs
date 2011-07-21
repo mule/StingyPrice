@@ -5,11 +5,9 @@ using System.Web;
 using StingyPrice.DAL.Models;
 
 namespace StingyPrice.Models {
-  public class Store : IModel
-  {
+  public class CategoryTree : IModel {
     public string Id { get; set; }
-    public string Name { get; set; }
-
+    public Category Root { get; set; }
 
   }
 }

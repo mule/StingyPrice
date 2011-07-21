@@ -33,5 +33,7 @@ namespace StingyPrice.Tests.Controllers {
       // Assert
       Assert.IsNotNull(result);
     }
+
+
   }
 }

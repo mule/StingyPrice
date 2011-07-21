@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using Raven.Client;
 using Raven.Client.Document;
-using RavenDbDemo.DAL.Repository;
 using StingyPrice.DAL.Models;
 
 namespace StingyPrice.DAL.Repositories {
