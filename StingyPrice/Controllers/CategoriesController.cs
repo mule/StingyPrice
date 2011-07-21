@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
+using StingyPrice.Models.ViewModels;
+using StingyPriceDAL.Models;
 using StingyPriceDAL.Repositories;
 
 namespace StingyPrice.Controllers
@@ -22,9 +25,15 @@ namespace StingyPrice.Controllers
 
         public ActionResult Index()
         {
-          
+            var catTree = _repository.All<CategoryTree>().FirstOrDefault();
+           
+            var vm = new CategoriesViewModel();
+            vm.MainCategoryNames = catTree.Root.SubCategories.Select(c => c.Name).ToList();
 
-            return View();
+
+           
+
+            return View(vm);
         }
 
     }

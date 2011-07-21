@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Raven.Client.Linq;
 using StingyPrice.DAL.Models;
 
 namespace StingyPriceDAL.Repositories
@@ -7,7 +9,7 @@ namespace StingyPriceDAL.Repositories
     public interface IRepository
     {
         T SingleOrDefault<T>(Func<T, bool> predicate) where T : IModel;
-        IEnumerable<T> All<T>() where T : IModel;
+        IRavenQueryable<T> All<T>() where T : IModel;
         void Delete<T>(T item) where T : IModel;
         void Add<T>( T item ) where T : IModel;
         void Save();

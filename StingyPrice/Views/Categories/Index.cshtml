@@ -1,0 +1,17 @@
+﻿@model   StingyPrice.Models.ViewModels.CategoriesViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2>Categories</h2>
+
+@foreach (string name in Model.MainCategoryNames)
+{
+    
+   <p>@name</p>
+}
+    
+    

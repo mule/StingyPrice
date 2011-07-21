@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Raven.Client;
 using Raven.Client.Document;
+using Raven.Client.Linq;
 using StingyPrice.DAL.Models;
+using StingyPriceDAL.Models;
 
 namespace StingyPriceDAL.Repositories {
   public class RavenRepository : IRepository {
@@ -18,9 +20,11 @@ namespace StingyPriceDAL.Repositories {
     public T SingleOrDefault<T>(Func<T, bool> predicate) where T : IModel {
       return _session.Query<T>().SingleOrDefault(predicate);
     }
-
-    public IEnumerable<T> All<T>() where T : IModel {
+     
+    public IRavenQueryable<T> All<T>() where T : IModel {
       return _session.Query<T>();
+      
+        
     }
 
     public void Add<T>(T item) where T : IModel {
