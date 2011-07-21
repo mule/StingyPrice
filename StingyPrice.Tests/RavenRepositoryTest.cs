@@ -76,7 +76,7 @@ namespace StingyPrice.Tests {
     [TestMethod()]
     public void AddTest() {
 
-      var docStore = new Raven.Client.Document.DocumentStore { Url = "http://localhost:8080" };
+      var docStore = new Raven.Client.Document.DocumentStore { Url = "http://localhost:8080", DefaultDatabase =  "UnitTestDB"};
       docStore.Initialize();
       var rep = new RavenRepository(docStore);
       createTestData();
