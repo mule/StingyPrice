@@ -1,15 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using StingyPrice.DAL.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using StingyPrice.DAL.Models;
-using Raven.Client.Document;
-using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
-using StingyPrice.Models;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
+using StingyPriceDAL.Models;
+using StingyPriceDAL.Repositories;
 
 namespace StingyPrice.Tests {
 

@@ -77,6 +77,10 @@
     <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\StingyPriceDAL\StingyPriceDAL.csproj">
+      <Project>{296F1C99-971D-4DFD-8CC8-456A90F69D88}</Project>
+      <Name>StingyPriceDAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StingyPrice\StingyPrice.csproj">
       <Project>{401A51E3-003A-414E-90F3-99F731FED413}</Project>
       <Name>StingyPrice</Name>

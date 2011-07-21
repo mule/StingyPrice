@@ -34,7 +34,7 @@ namespace StingyPrice {
       RegisterGlobalFilters(GlobalFilters.Filters);
       RegisterRoutes(RouteTable.Routes);
 
-      var documentStore = new Raven.Client.Document.DocumentStore { Url = "http://localhost:8080", };
+      var documentStore = new Raven.Client.Document.DocumentStore { Url = "http://localhost:8080"};
       documentStore.Initialize();
       Application["DocumentStore"] = documentStore;
       ControllerBuilder.Current.SetControllerFactory(typeof(CustomControllerFactory));
