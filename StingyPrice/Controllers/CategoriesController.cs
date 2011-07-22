@@ -28,9 +28,17 @@ namespace StingyPrice.Controllers
             var catTree = _repository.All<CategoryTree>().FirstOrDefault();
            
             var vm = new CategoriesViewModel();
-            vm.MainCategoryNames = catTree.Root.SubCategories.Select(c => c.Name).ToList();
+            if (ValidateRequest) {
+              vm.BuildNamesDictionary(catTree.Root);
+            }
+            else
+            {
+              //TODO: Go to error page here
 
+            }
+          
 
+          
            
 
             return View(vm);

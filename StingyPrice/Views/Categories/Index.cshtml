@@ -7,11 +7,17 @@
 }
 
 <h2>Categories</h2>
+@{
 
-@foreach (string name in Model.MainCategoryNames)
-{
+ var menu = Html.Telerik().Menu()
+    .Name("MainMenu");
+
+  foreach (var mainCategory in Model.CategoryNameDictionary )
+  {
+    menu.Items(mn => mn.Add().Text(mainCategory.Key));
+  }
+ 
     
-   <p>@name</p>
-}
+    menu.Render();
     
-    
+}  
