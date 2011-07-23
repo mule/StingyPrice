@@ -26,10 +26,12 @@ namespace StingyPrice.Controllers
         public ActionResult Index()
         {
             var catTree = _repository.All<CategoryTree>().FirstOrDefault();
-           
-            var vm = new CategoriesViewModel();
+
+            var vm = new CategoriesViewModel() {Root = catTree.Root};
+
             if (ValidateRequest) {
-              vm.BuildNamesDictionary(catTree.Root);
+                
+              
             }
             else
             {
