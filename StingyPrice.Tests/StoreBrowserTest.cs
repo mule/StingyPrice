@@ -1,7 +1,6 @@
-﻿using System.Diagnostics;
+﻿using StingyPrice.DataAcquisition;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using HtmlAgilityPack;
 using StingyPrice.DataAcquisition.Parsers;
 using StingyPrice.DataAcquisition.Parsers.Verkkokauppa;
 
@@ -10,17 +9,15 @@ namespace StingyPrice.Tests
     
     
     /// <summary>
-    ///This is a test class for VerkkokauppaParserTest and is intended
-    ///to contain all VerkkokauppaParserTest Unit Tests
+    ///This is a test class for StoreBrowserTest and is intended
+    ///to contain all StoreBrowserTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class VerkkokauppaParserTest
+    public class StoreBrowserTest
     {
 
 
         private TestContext testContextInstance;
-
-        private int categoryCount = 0;
 
         /// <summary>
         ///Gets or sets the test context which provides
@@ -70,27 +67,18 @@ namespace StingyPrice.Tests
 
 
         /// <summary>
-        ///A test for ParseMainpage
+        ///A test for BrowseStore
         ///</summary>
         [TestMethod()]
-        [DeploymentItem(@".\TestData\verkkokauppa.htm")]
-        public void ParseMainpageTest()
+        public void BrowseStoreTest()
         {
-            VerkkokauppaParser target = new VerkkokauppaParser(); 
-            HtmlDocument document = new HtmlDocument();
-            target.FoundCategory += new EventHandler<DataAcquisition.Parsers.ParserEventArgs>(target_FoundCategory);
-            document.Load("verkkokauppa.htm");
-            target.ParseMainpage(document);
-
-           
-           Assert.IsTrue(categoryCount==8);
-        }
-
-        private void target_FoundCategory(object sender, ParserEventArgs e)
-        {
-            Trace.WriteLine(String.Format("Category found: {0} {1}", e.CategoryName, e.CategoryLink));
-            categoryCount++;
+            StoreBrowser target = new StoreBrowser(); // TODO: Initialize to an appropriate value
+            Parser parser = new  VerkkokauppaParser();
+            string url = "http://www.verkkokauppa.com";
+            target.BrowseStore(parser, url);
             
+
+          
         }
     }
 }

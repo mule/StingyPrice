@@ -75,6 +75,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="RavenRepositoryTest.cs" />
+    <Compile Include="StoreBrowserTest.cs" />
     <Compile Include="VerkkokauppaParserTest.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,24 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using DataAcquisition.Parsers;
-using HtmlAgilityPack;
+﻿using HtmlAgilityPack;
+using StingyPrice.DataAcquisition.Parsers;
 
-namespace StingyPrice.Parsers.Verkkokauppa
+namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
 {
-    public class VerkkokauppaParser : IParser
+    public class VerkkokauppaParser : Parser
     {
 
-        public delegate void ParserEventHandler(object sender, ParserEventArgs args);
-
-
-        public event ParserEventHandler FoundCategory;
-
-
-
-        public void ParseMainpage(HtmlDocument document)
+        public override void ParseMainpage(HtmlDocument document)
         {
             var navbarNodes =
                 document.DocumentNode.SelectNodes(
@@ -32,30 +20,23 @@ namespace StingyPrice.Parsers.Verkkokauppa
                         string href = node.Attributes["href"].Value;
                         string name = node.InnerText;
 
-
-                        FoundCategory(this, new ParserEventArgs() { CategoryLink = href, CategoryName = name });
+                        
+                            OnFoundCategory( new ParserEventArgs() { CategoryLink = href, CategoryName = name });
                     }
                 }
 
             }
         }
-
-
-        public class ParserEventArgs : EventArgs
+        protected override void OnFoundCategory(ParserEventArgs args)
         {
-            public string CategoryName;
-            public string CategoryLink;
-
-
-            public ParserEventArgs()
-            {
-
-
-            }
-
+            base.OnFoundCategory(args);
 
 
 
         }
+        
+
+
+      
     }
 }

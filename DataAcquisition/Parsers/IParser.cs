@@ -1,6 +1,6 @@
 ﻿using HtmlAgilityPack;
 
-namespace DataAcquisition.Parsers
+namespace StingyPrice.DataAcquisition.Parsers
 {
    public interface IParser
    {
