@@ -1,4 +1,5 @@
-﻿using StingyPrice.DataAcquisition;
+﻿using System.Diagnostics;
+using StingyPrice.DataAcquisition;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using StingyPrice.DataAcquisition.Parsers;
@@ -78,9 +79,11 @@ namespace StingyPrice.Tests
           var store = new Store() {MainPageUrl = "http://www.verkkokauppa.com", Name = "Verkkokauppa"};
        
             target.BrowseStore(parser,store );
-            
 
-          
+            Trace.WriteLine(target.SearchResult.Categories.ToString());
+
+
+
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using StingyPriceDAL.Models;
 
 namespace StingyPrice.DataAcquisition.Parsers
 {
@@ -8,6 +9,7 @@ namespace StingyPrice.DataAcquisition.Parsers
        
        void ParseMainpage(HtmlDocument document);
      void ParseCategoryPage(HtmlDocument document, string parentCategory);
+       Product ParseProductPage(HtmlDocument document, string parentCategory);
 
 
 

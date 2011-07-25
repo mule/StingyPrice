@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using HtmlAgilityPack;
 using StingyPrice.DataAcquisition.Parsers;
+using StingyPriceDAL.Models;
 
 namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
 {
@@ -56,12 +57,49 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
 
               }
             }
+          }
+          else
+          {
+              //No category list found, lets check for product list then
+
+              var prodNodes = result.DocumentNode.SelectNodes(@"//div[@class='productList']//a[@class='productInfo']");
+
+              if (prodNodes != null)
+              {
+                  foreach (HtmlNode prodNode in prodNodes)
+                  {
+                      if (prodNode != null)
+                      {
+                          string href = prodNode.Attributes["href"].Value;
+
+                          Trace.WriteLine(String.Format("Thread {0}: Found product page link {1}",
+                                                        Thread.CurrentThread.ManagedThreadId, href));
+
+                          OnFoundProduct(new ParserEventArgs(){ParentCategoryName = parentCategory, ProductLink = href});
+                      }
+                  }
 
 
+              }
+              else
+              {
+                  Trace.WriteLine("No product links found");
+              }
           }
 
 
 
+        }
+
+        public override Product ParseProductPage(HtmlDocument document, string parentCategory)
+        {
+          
+
+            Trace.WriteLine(String.Format("Thread {0}: Parsing productpage"));
+
+            return  new Product();
+
+            
         }
         protected override void OnFoundCategory(ParserEventArgs args)
         {
@@ -69,6 +107,11 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
 
 
 
+        }
+
+        protected override void OnFoundProduct(ParserEventArgs args)
+        {
+            base.OnFoundProduct(args);
         }
         
 

@@ -21,6 +21,7 @@ namespace StingyPrice.Tests
         private TestContext testContextInstance;
 
         private int categoryCount = 0;
+        private int productCount = 0;
 
         /// <summary>
         ///Gets or sets the test context which provides
@@ -91,6 +92,30 @@ namespace StingyPrice.Tests
             Trace.WriteLine(String.Format("Category found: {0} {1}", e.CategoryName, e.CategoryLink));
             categoryCount++;
             
+        }
+
+        /// <summary>
+        ///A test for ParseCategoryPage
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem(@".\TestData\productlist.htm")]
+        public void ParsePage_product_list_found_test()
+        {
+            VerkkokauppaParser target = new VerkkokauppaParser(); 
+            HtmlDocument result = new HtmlDocument();
+            result.Load("productlist.htm");
+            string parentCategory = "Pelikuullokkeet";
+            target.FounndProduct += new EventHandler<ParserEventArgs>(target_FounndProduct);
+           
+            target.ParseCategoryPage(result, parentCategory);
+            Assert.IsTrue(productCount>10);
+           
+            
+        }
+
+        void target_FounndProduct(object sender, ParserEventArgs e)
+        {
+            productCount++;
         }
     }
 }

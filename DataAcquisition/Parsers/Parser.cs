@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using HtmlAgilityPack;
+using StingyPriceDAL.Models;
 
 
 namespace StingyPrice.DataAcquisition.Parsers
@@ -15,6 +16,7 @@ namespace StingyPrice.DataAcquisition.Parsers
 
 
         public event EventHandler<ParserEventArgs> FoundCategory;
+       public event EventHandler<ParserEventArgs> FounndProduct;
 
 
        public virtual void ParseMainpage(HtmlAgilityPack.HtmlDocument document)
@@ -31,6 +33,13 @@ namespace StingyPrice.DataAcquisition.Parsers
 
        }
 
+       protected virtual  void OnFoundProduct(ParserEventArgs args)
+       {
+           if (FounndProduct != null)
+               FounndProduct(this, args);
+
+       }
+
 
        public virtual void ParseCategoryPage(HtmlDocument result, string parentCategory)
        {
@@ -41,6 +50,12 @@ namespace StingyPrice.DataAcquisition.Parsers
 
 
        }
+
+
+       public virtual Product ParseProductPage(HtmlDocument document, string parentCategory)
+       {
+           return new Product();
+       }
     }
 
 
@@ -49,6 +64,7 @@ namespace StingyPrice.DataAcquisition.Parsers
      public string ParentCategoryName; 
        public string CategoryName;
        public string CategoryLink;
+       public string ProductLink { get; set; }
 
 
        public ParserEventArgs()
