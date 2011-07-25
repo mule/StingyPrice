@@ -1,4 +1,7 @@
-﻿using HtmlAgilityPack;
+﻿using System;
+using System.Diagnostics;
+using System.Threading;
+using HtmlAgilityPack;
 using StingyPrice.DataAcquisition.Parsers;
 
 namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
@@ -21,11 +24,44 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
                         string name = node.InnerText;
 
                         
-                            OnFoundCategory( new ParserEventArgs() { CategoryLink = href, CategoryName = name });
+                            OnFoundCategory( new ParserEventArgs() { CategoryLink = href, CategoryName = name, ParentCategoryName = "root"});
                     }
                 }
 
             }
+        }
+
+        public override void ParseCategoryPage(HtmlDocument result,string parentCategory) {
+          base.ParseCategoryPage(result,parentCategory);
+
+          Trace.WriteLine(String.Format(@"Thread {0} Parsing category page:", Thread.CurrentThread.ManagedThreadId));
+
+          if (result == null)
+            throw new ArgumentNullException("Empty document passed to parser");
+
+          var subCatNodes = result.DocumentNode.SelectNodes(@"//div[@class='tags subcategories']/ul/li/a");
+
+          if (subCatNodes != null)
+          {
+            foreach (HtmlNode subCatNode in subCatNodes)
+            {
+              if (subCatNode != null)
+              {
+
+                string href = subCatNode.Attributes["href"].Value;
+                string name = subCatNode.InnerText;
+
+                Trace.WriteLine(String.Format("Thread {0}: Found subcategory {1} {2}",Thread.CurrentThread.ManagedThreadId, name,href));
+                OnFoundCategory( new ParserEventArgs(){CategoryLink = href, CategoryName = name, ParentCategoryName = parentCategory});
+
+              }
+            }
+
+
+          }
+
+
+
         }
         protected override void OnFoundCategory(ParserEventArgs args)
         {

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using HtmlAgilityPack;
 
 
@@ -30,15 +32,21 @@ namespace StingyPrice.DataAcquisition.Parsers
        }
 
 
-       public void ParseCategoryPage(HtmlDocument result)
+       public virtual void ParseCategoryPage(HtmlDocument result, string parentCategory)
        {
-           throw new NotImplementedException();
+
+
+
+         
+
+
        }
     }
 
 
    public class ParserEventArgs : EventArgs
    {
+     public string ParentCategoryName; 
        public string CategoryName;
        public string CategoryLink;
 

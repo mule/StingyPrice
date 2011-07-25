@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using StingyPrice.DataAcquisition.Parsers;
 using StingyPrice.DataAcquisition.Parsers.Verkkokauppa;
+using StingyPriceDAL.Models;
 
 namespace StingyPrice.Tests
 {
@@ -74,8 +75,9 @@ namespace StingyPrice.Tests
         {
             StoreBrowser target = new StoreBrowser(); // TODO: Initialize to an appropriate value
             Parser parser = new  VerkkokauppaParser();
-            string url = "http://www.verkkokauppa.com";
-            target.BrowseStore(parser, url);
+          var store = new Store() {MainPageUrl = "http://www.verkkokauppa.com", Name = "Verkkokauppa"};
+       
+            target.BrowseStore(parser,store );
             
 
           

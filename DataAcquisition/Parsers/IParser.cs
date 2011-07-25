@@ -7,6 +7,9 @@ namespace StingyPrice.DataAcquisition.Parsers
 
        
        void ParseMainpage(HtmlDocument document);
+     void ParseCategoryPage(HtmlDocument document, string parentCategory);
+
+
 
    }
 }
