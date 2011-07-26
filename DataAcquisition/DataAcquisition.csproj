@@ -50,6 +50,10 @@
     <Compile Include="StoreBrowser.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ParallelExtensionExtras\ParallelExtensionsExtras.csproj">
+      <Project>{C45218F8-09E7-4F57-85BC-5D8D2AC736A3}</Project>
+      <Name>ParallelExtensionsExtras</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StingyPriceDAL\StingyPriceDAL.csproj">
       <Project>{296F1C99-971D-4DFD-8CC8-456A90F69D88}</Project>
       <Name>StingyPriceDAL</Name>
