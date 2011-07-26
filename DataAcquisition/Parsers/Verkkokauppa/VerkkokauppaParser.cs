@@ -97,6 +97,13 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
 
             Trace.WriteLine(String.Format("Thread {0}: Parsing productpage"));
 
+            if(document==null)
+                throw  new ArgumentNullException("Parser was given an empty product page");
+
+
+
+
+
             return  new Product();
 
             

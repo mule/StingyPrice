@@ -113,6 +113,24 @@ namespace StingyPrice.Tests
             
         }
 
+
+    [TestMethod()]
+    [DeploymentItem(@".\TestData\verkkokauppa_product.htm")]
+        public void ParseProductPageTest()
+    {
+        VerkkokauppaParser target = new VerkkokauppaParser();
+        HtmlDocument result = new HtmlDocument();
+        result.Load("verkkokauppa_product.htm");
+
+        var product = target.ParseProductPage(result, "TestiKategoria");
+
+
+
+
+    }
+
+
+
         void target_FounndProduct(object sender, ParserEventArgs e)
         {
             productCount++;

@@ -11,6 +11,7 @@ namespace StingyPriceDAL.Models
       public string Id { get; set; }
       public string Name { get; set; }
       public ICollection<Category> SubCategories { get; set; }
+        public ICollection<Product> Products { get; set; }
 
         public Category()
         {
