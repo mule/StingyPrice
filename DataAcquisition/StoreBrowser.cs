@@ -44,7 +44,7 @@ namespace StingyPrice.DataAcquisition {
     public void BrowseStore(Parser parser, Store store) {
       _parser = parser;
       _parser.FoundCategory += new EventHandler<ParserEventArgs>(parser_FoundCategory);
-      _parser.FounndProduct += new EventHandler<ParserEventArgs>(_parser_FounndProduct);
+      _parser.FounndProduct += new EventHandler<ParserEventArgs>(_parser_FoundProduct);
 
 
       SearchResult = new StoreSearch() {
@@ -75,8 +75,20 @@ namespace StingyPrice.DataAcquisition {
 
     
 
-    void _parser_FounndProduct(object sender, ParserEventArgs e) {
+    void _parser_FoundProduct(object sender, ParserEventArgs e) {
       Trace.WriteLine(String.Format("Thread {0} Product found: {1} {2}", Thread.CurrentThread.ManagedThreadId, e.ParentCategoryName, e.ProductLink));
+
+      try {
+        var task = _factory.StartNew<HtmlDocument>(() => { return _client.Load(e.ProductLink); }).ContinueWith<Product>(
+      (t) => _parser.ParseProductPage(t.Result, e.CategoryName)).
+      ContinueWith((t) => SearchResult.Categories.AddProduct(t.Result, e.CategoryName));
+      }
+      catch (AggregateException ae) {
+
+        if(ae.Handle())
+        //TODO: Add propper logging here
+        Trace.WriteLine(ex.Message);
+      }
 
     }
 
@@ -92,13 +104,22 @@ namespace StingyPrice.DataAcquisition {
       }
 
 
-      var categoryTask = new Task<HtmlDocument>(() => _client.Load(e.CategoryLink));
+      try
+      {
+        var task = _factory.StartNew<HtmlDocument>(() => { return _client.Load(e.CategoryLink); }).ContinueWith(
+    (t) => _parser.ParseCategoryPage(t.Result, e.ParentCategoryName));
 
-      var task = _factory.StartNew<HtmlDocument>(() => { return _client.Load(e.CategoryLink); }).ContinueWith(
-          (t) => _parser.ParseCategoryPage(t.Result, e.ParentCategoryName));
 
-   
         _tasks.Add(task);
+
+      }
+      catch (InvalidOperationException ex)
+      {
+       //TODO: Add proper logging here 
+        Trace.WriteLine(ex.Message);
+      }
+
+
 
       
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Threading;
 using HtmlAgilityPack;
 using StingyPrice.DataAcquisition.Parsers;
@@ -9,6 +11,7 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
 {
     public class VerkkokauppaParser : Parser
     {
+
 
         public override void ParseMainpage(HtmlDocument document)
         {
@@ -75,7 +78,7 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
                           Trace.WriteLine(String.Format("Thread {0}: Found product page link {1}",
                                                         Thread.CurrentThread.ManagedThreadId, href));
 
-                          OnFoundProduct(new ParserEventArgs(){ParentCategoryName = parentCategory, ProductLink = href});
+                          OnFoundProduct(new ParserEventArgs(){CategoryName = parentCategory, ProductLink = href});
                       }
                   }
 
@@ -93,20 +96,63 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
 
         public override Product ParseProductPage(HtmlDocument document, string parentCategory)
         {
-          
 
-            Trace.WriteLine(String.Format("Thread {0}: Parsing productpage"));
+          var prod = new Product();
+            Trace.WriteLine(String.Format("Thread {0}: Parsing productpage", Thread.CurrentThread.ManagedThreadId));
 
             if(document==null)
                 throw  new ArgumentNullException("Parser was given an empty product page");
 
+          var nameNode = document.DocumentNode.SelectSingleNode(@"//h1[@id='productName']");
+
+          if (nameNode != null)
+            prod.Name = nameNode.InnerText;
+          else
+          {
+            throw new InvalidOperationException("Could not find product name on product page");
+          }
 
 
+          var priceNode = document.DocumentNode.SelectSingleNode(@"//span[@class='hintabig']");
+
+          if (priceNode != null)
+          {
+            var priceStr = priceNode.InnerText;
+
+           var match =  Regex.Match(priceStr, @"\d+[,.]\d+");
 
 
-            return  new Product();
+           if (match.Success)
+             priceStr = match.Value;
+           else
+           {
+             prod.Price = double.NaN;
+             return prod;
+           }
+             
 
-            
+            double price;
+
+
+            if (!Double.TryParse(priceStr, NumberStyles.Currency, CultureInfo.CurrentCulture, out price))
+              if (!Double.TryParse(priceStr, NumberStyles.Any, CultureInfo.InvariantCulture, out price))
+                price = Double.NaN;
+
+
+            prod.Price = price;
+
+          }
+          else
+          {
+            throw  new InvalidOperationException(String.Format("Could not find price node for product {0}",prod.Name));
+          }
+           
+
+          
+
+          return prod;
+
+
         }
         protected override void OnFoundCategory(ParserEventArgs args)
         {

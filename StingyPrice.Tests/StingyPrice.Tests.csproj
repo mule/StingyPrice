@@ -86,7 +86,9 @@
     <Content Include="TestData\verkkokauppa.htm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\verkkokauppa_product.htm" />
+    <Content Include="TestData\verkkokauppa_product.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAcquisition\DataAcquisition.csproj">

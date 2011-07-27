@@ -43,6 +43,14 @@ namespace StingyPriceDAL.Models
             var sb = new StringBuilder();
             sb.AppendLine(string.Format("Categoryname: {0}", Name));
 
+          sb.AppendLine("Products:");
+          foreach (Product product in Products)
+          {
+            sb.AppendLine(product.ToString());
+          }
+
+          sb.AppendLine(string.Format("Subcategories:"));
+
             foreach (Category subCategory in SubCategories)
             {
                 sb.AppendLine(subCategory.ToString());

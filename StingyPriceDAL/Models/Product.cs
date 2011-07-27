@@ -10,5 +10,12 @@ namespace StingyPriceDAL.Models {
       public Category Category { get; set; }
       public ProductGroup ProductGroup { get; set; }
 
+
+      public override string ToString()
+      {
+        var prodStr = string.Format("Name: {0} Price: {1}", Name, Price);
+        return prodStr;
+      }
+
   }
 }
