@@ -109,7 +109,7 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
             prod.Name = nameNode.InnerText;
           else
           {
-            throw new InvalidOperationException("Could not find product name on product page");
+              //TODO: add irregular product link handling here 
           }
 
 
@@ -144,7 +144,9 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
           }
           else
           {
-            throw  new InvalidOperationException(String.Format("Could not find price node for product {0}",prod.Name));
+
+              //TODO: add irregular product link handling here 
+              prod.Price = double.NaN;
           }
            
 
