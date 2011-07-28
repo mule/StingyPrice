@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -55,6 +55,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataAcquisition\DataAcquisition.csproj">
+      <Project>{8816DA97-2F84-4AF6-8F95-CC2A91D5EF31}</Project>
+      <Name>DataAcquisition</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StingyPriceDAL\StingyPriceDAL.csproj">
       <Project>{296F1C99-971D-4DFD-8CC8-456A90F69D88}</Project>
       <Name>StingyPriceDAL</Name>

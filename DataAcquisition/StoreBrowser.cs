@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,11 +51,14 @@ namespace StingyPrice.DataAcquisition
             _parser.FoundCategory += new EventHandler<ParserEventArgs>(parser_FoundCategory);
             _parser.FounndProduct += new EventHandler<ParserEventArgs>(_parser_FoundProduct);
 
+            LimitedConcurrencyLevelTaskScheduler.UnobservedTaskException += new EventHandler<UnobservedTaskExceptionEventArgs>(LimitedConcurrencyLevelTaskScheduler_UnobservedTaskException);
+
 
             SearchResult = new StoreSearch()
             {
                 Categories =
-                    new CategoryTree() { Root = new Category() { Name = "root", SubCategories = new List<Category>() } }
+                    new CategoryTree() { Root = new Category() { Name = "root", SubCategories = new List<Category>() } },
+                Created = DateTime.Now
 
             };
 
@@ -73,9 +77,58 @@ namespace StingyPrice.DataAcquisition
 
             while (_tasks.Where(t => t.IsCompleted == false).Count() > 0)
             {
-                Thread.Sleep(5000);
+                try
+                {
+                    Task.WaitAll(_tasks.ToArray());
+                    Thread.Sleep(5000);
+                }
+                catch (AggregateException ae)
+                {
+
+                    ae.Handle((x) =>
+                                  {
+                                      if (x is InvalidOperationException)
+                                      {
+
+                                          //TODO: add logging here
+                                          Trace.WriteLine(x.Message);
+                                          return true;
+                                      }
+
+
+                                      return false;
+                                  });
+
+
+                }
 
             }
+        }
+
+        void LimitedConcurrencyLevelTaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+            e.Exception.Handle((x) =>
+            {
+                if (x is InvalidOperationException)
+                {
+
+                    //TODO: add logging here
+                    Trace.WriteLine(x.Message);
+                    return true;
+                }
+               
+
+
+
+
+                
+
+                return false;
+
+            });
+
+
+
         }
 
 
@@ -86,27 +139,12 @@ namespace StingyPrice.DataAcquisition
         {
             Trace.WriteLine(String.Format("Thread {0} Product found: {1} {2}", Thread.CurrentThread.ManagedThreadId, e.ParentCategoryName, e.ProductLink));
 
-            try
-            {
-                var task = _factory.StartNew<HtmlDocument>(() => { return _client.Load(e.ProductLink); }).ContinueWith<Product>(
-              (t) => _parser.ParseProductPage(t.Result, e.CategoryName)).
-              ContinueWith((t) => SearchResult.Categories.AddProduct(t.Result, e.CategoryName));
-            }
-            catch (AggregateException ae)
-            {
 
-                ae.Handle((x) =>
-                              {
-                                  if (x is InvalidOperationException)
-                                  {
+            var task = _factory.StartNew<HtmlDocument>(() => { return _client.Load(e.ProductLink); }).ContinueWith<Product>(
+          (t) => _parser.ParseProductPage(t.Result, e.CategoryName)).
+          ContinueWith((t) => SearchResult.Categories.AddProduct(t.Result, e.CategoryName));
 
-                                      //TODO: add logging here
-                                      Trace.WriteLine(x.Message);
-                                      return true;
-                                  }
-                                  return false;
-                              });
-            }
+
 
         }
 
@@ -124,30 +162,14 @@ namespace StingyPrice.DataAcquisition
             }
 
 
-            try
-            {
-                var task = _factory.StartNew<HtmlDocument>(() => { return _client.Load(e.CategoryLink); }).ContinueWith(
-            (t) => _parser.ParseCategoryPage(t.Result, e.ParentCategoryName));
+            var task = _factory.StartNew<HtmlDocument>(() => { return _client.Load(e.CategoryLink); }).ContinueWith(
+        (t) => _parser.ParseCategoryPage(t.Result, e.ParentCategoryName));
 
 
-                _tasks.Add(task);
+            _tasks.Add(task);
 
-            }
-            catch (AggregateException ae)
-            {
 
-                ae.Handle((x) =>
-                {
-                    if (x is InvalidOperationException)
-                    {
 
-                        //TODO: add logging here
-                        Trace.WriteLine(x.Message);
-                        return true;
-                    }
-                    return false;
-                });
-            }
         }
     }
 }
