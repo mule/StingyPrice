@@ -28,15 +28,15 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
                         string name = node.InnerText;
 
                         
-                            OnFoundCategory( new ParserEventArgs() { CategoryLink = href, CategoryName = name, ParentCategoryName = "root"});
+                            OnFoundCategory( new ParserEventArgs() { CategoryLink = href, CategoryName = name, ParentCategoryId = "root"});
                     }
                 }
 
             }
         }
 
-        public override void ParseCategoryPage(HtmlDocument result,string parentCategory) {
-          base.ParseCategoryPage(result,parentCategory);
+        public override void ParseCategoryPage(HtmlDocument result,string parentCategoryId) {
+          base.ParseCategoryPage(result,parentCategoryId);
 
           Trace.WriteLine(String.Format(@"Thread {0} Parsing category page:", Thread.CurrentThread.ManagedThreadId));
 
@@ -56,7 +56,7 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
                 string name = subCatNode.InnerText;
 
                 Trace.WriteLine(String.Format("Thread {0}: Found subcategory {1} {2}",Thread.CurrentThread.ManagedThreadId, name,href));
-                OnFoundCategory( new ParserEventArgs(){CategoryLink = href, CategoryName = name, ParentCategoryName = parentCategory});
+                OnFoundCategory( new ParserEventArgs(){CategoryLink = href, CategoryName = name, ParentCategoryId = parentCategoryId});
 
               }
             }
@@ -78,7 +78,7 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
                           Trace.WriteLine(String.Format("Thread {0}: Found product page link {1}",
                                                         Thread.CurrentThread.ManagedThreadId, href));
 
-                          OnFoundProduct(new ParserEventArgs(){CategoryName = parentCategory, ProductLink = href});
+                          OnFoundProduct(new ParserEventArgs(){CategoryName = parentCategoryId, ProductLink = href});
                       }
                   }
 
@@ -94,7 +94,7 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
 
         }
 
-        public override Product ParseProductPage(HtmlDocument document, string parentCategory)
+        public override Product ParseProductPage(HtmlDocument document, string parentCategoryId)
         {
 
           var prod = new Product();

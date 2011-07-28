@@ -41,7 +41,7 @@ namespace StingyPrice.DataAcquisition.Parsers
        }
 
 
-       public virtual void ParseCategoryPage(HtmlDocument result, string parentCategory)
+       public virtual void ParseCategoryPage(HtmlDocument result, string parentCategoryId)
        {
 
 
@@ -52,7 +52,7 @@ namespace StingyPrice.DataAcquisition.Parsers
        }
 
 
-       public virtual Product ParseProductPage(HtmlDocument document, string parentCategory)
+       public virtual Product ParseProductPage(HtmlDocument document, string parentCategoryId)
        {
            return new Product();
        }
@@ -61,7 +61,7 @@ namespace StingyPrice.DataAcquisition.Parsers
 
    public class ParserEventArgs : EventArgs
    {
-     public string ParentCategoryName; 
+     public string ParentCategoryId; 
        public string CategoryName;
        public string CategoryLink;
        public string ProductLink { get; set; }

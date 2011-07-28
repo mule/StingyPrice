@@ -20,11 +20,10 @@ namespace StingyPrice.DataAcquisition
 
         private HtmlWeb _client;
         private Parser _parser;
-        //private List<Task> _tasks;
         private BlockingCollection<Task> _tasks;
         TaskFactory _factory;
 
-        public StoreSearch SearchResult { get; set; }
+     
 
 
 
@@ -95,7 +94,6 @@ namespace StingyPrice.DataAcquisition
                                           return true;
                                       }
 
-
                                       return false;
                                   });
 
@@ -116,13 +114,6 @@ namespace StingyPrice.DataAcquisition
                     Trace.WriteLine(x.Message);
                     return true;
                 }
-               
-
-
-
-
-                
-
                 return false;
 
             });
@@ -137,7 +128,7 @@ namespace StingyPrice.DataAcquisition
 
         void _parser_FoundProduct(object sender, ParserEventArgs e)
         {
-            Trace.WriteLine(String.Format("Thread {0} Product found: {1} {2}", Thread.CurrentThread.ManagedThreadId, e.ParentCategoryName, e.ProductLink));
+            Trace.WriteLine(String.Format("Thread {0} Product found: {1} {2}", Thread.CurrentThread.ManagedThreadId, e.ParentCategoryId, e.ProductLink));
 
 
             var task = _factory.StartNew<HtmlDocument>(() => { return _client.Load(e.ProductLink); }).ContinueWith<Product>(
@@ -152,7 +143,7 @@ namespace StingyPrice.DataAcquisition
         {
             Trace.WriteLine(String.Format("Thread {0} Category found: {1} {2}", Thread.CurrentThread.ManagedThreadId, e.CategoryName, e.CategoryLink));
 
-            var parent = SearchResult.Categories.FindCategory(e.ParentCategoryName);
+            var parent = SearchResult.Categories.FindCategory(e.ParentCategoryId);
 
             if (parent == null)
                 throw new InvalidOperationException("Parent category not found");
@@ -163,7 +154,7 @@ namespace StingyPrice.DataAcquisition
 
 
             var task = _factory.StartNew<HtmlDocument>(() => { return _client.Load(e.CategoryLink); }).ContinueWith(
-        (t) => _parser.ParseCategoryPage(t.Result, e.ParentCategoryName));
+        (t) => _parser.ParseCategoryPage(t.Result, e.ParentCategoryId));
 
 
             _tasks.Add(task);
