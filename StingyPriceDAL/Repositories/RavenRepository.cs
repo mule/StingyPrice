@@ -35,6 +35,8 @@ namespace StingyPriceDAL.Repositories {
       _session.Delete(item);
     }
 
+    
+
     public void Save() {
       _session.SaveChanges();
     }

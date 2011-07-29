@@ -48,18 +48,9 @@ namespace StingyPrice.DataAcquisition
         {
             _parser = parser;
             _parser.FoundCategory += new EventHandler<ParserEventArgs>(parser_FoundCategory);
-            _parser.FounndProduct += new EventHandler<ParserEventArgs>(_parser_FoundProduct);
+            _parser.FoundProductLink += new EventHandler<ParserEventArgs>(_parser_FoundProduct);
 
             LimitedConcurrencyLevelTaskScheduler.UnobservedTaskException += new EventHandler<UnobservedTaskExceptionEventArgs>(LimitedConcurrencyLevelTaskScheduler_UnobservedTaskException);
-
-
-            SearchResult = new StoreSearch()
-            {
-                Categories =
-                    new CategoryTree() { Root = new Category() { Name = "root", SubCategories = new List<Category>() } },
-                Created = DateTime.Now
-
-            };
 
 
 
@@ -71,6 +62,13 @@ namespace StingyPrice.DataAcquisition
             {
                 throw new InvalidOperationException(String.Format(@"Could not load main page from {0}", store.MainPageUrl));
             }
+
+          var completedTasks = _tasks.Where(t => t.IsCompleted);
+
+          foreach (Task completedTask in completedTasks)
+          {
+            completedTask.Dispose();
+          }
 
 
 
@@ -131,9 +129,9 @@ namespace StingyPrice.DataAcquisition
             Trace.WriteLine(String.Format("Thread {0} Product found: {1} {2}", Thread.CurrentThread.ManagedThreadId, e.ParentCategoryId, e.ProductLink));
 
 
-            var task = _factory.StartNew<HtmlDocument>(() => { return _client.Load(e.ProductLink); }).ContinueWith<Product>(
-          (t) => _parser.ParseProductPage(t.Result, e.CategoryName)).
-          ContinueWith((t) => SearchResult.Categories.AddProduct(t.Result, e.CategoryName));
+          var task = _factory.StartNew<HtmlDocument>(() => { return _client.Load(e.ProductLink); }).ContinueWith(
+            (t) => _parser.ParseProductPage(t.Result, e.CategoryName));
+
 
 
 
@@ -142,15 +140,6 @@ namespace StingyPrice.DataAcquisition
         private void parser_FoundCategory(object sender, ParserEventArgs e)
         {
             Trace.WriteLine(String.Format("Thread {0} Category found: {1} {2}", Thread.CurrentThread.ManagedThreadId, e.CategoryName, e.CategoryLink));
-
-            var parent = SearchResult.Categories.FindCategory(e.ParentCategoryId);
-
-            if (parent == null)
-                throw new InvalidOperationException("Parent category not found");
-            else
-            {
-                parent.AddSubCategory(new Category() { Name = e.CategoryName });
-            }
 
 
             var task = _factory.StartNew<HtmlDocument>(() => { return _client.Load(e.CategoryLink); }).ContinueWith(

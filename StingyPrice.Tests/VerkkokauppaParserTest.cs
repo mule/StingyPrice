@@ -97,7 +97,7 @@ namespace StingyPrice.Tests {
       HtmlDocument result = new HtmlDocument();
       result.Load("productlist.htm");
       string parentCategory = "Pelikuullokkeet";
-      target.FounndProduct += new EventHandler<ParserEventArgs>(target_FounndProduct);
+      target.FoundProductLink += new EventHandler<ParserEventArgs>(target_FoundProductLink);
 
       target.ParseCategoryPage(result, parentCategory);
       Assert.IsTrue(productCount > 10);
@@ -112,12 +112,12 @@ namespace StingyPrice.Tests {
       VerkkokauppaParser target = new VerkkokauppaParser();
       HtmlDocument result = new HtmlDocument();
       result.Load("verkkokauppa_product.htm");
+      target.ProductParsed += new EventHandler<ParserEventArgs>(target_ProductParsed);
 
-      var product = target.ParseProductPage(result, "TestiKategoria");
+      target.ParseProductPage(result, "TestiKategoria");
 
-      Assert.IsNotNull(product);
-      Assert.IsTrue(!String.IsNullOrEmpty(product.Name));
-      Assert.IsTrue(product.Price!=Double.NaN);
+
+
       
 
 
@@ -127,9 +127,21 @@ namespace StingyPrice.Tests {
 
     }
 
+    void target_ProductParsed(object sender, ParserEventArgs e)
+    {
+
+      Trace.WriteLine(String.Format("Product parsed: {0}", e.Product.ToString()));
+      ;
+      Assert.IsNotNull(e.Product);
+      Assert.IsTrue(!String.IsNullOrEmpty(e.Product.Name));
+      Assert.IsTrue(!Double.IsNaN(e.Product.Price));
+     
+    }
 
 
-    void target_FounndProduct(object sender, ParserEventArgs e) {
+
+    void target_FoundProductLink(object sender, ParserEventArgs e) {
+      Trace.WriteLine(String.Format("Product link found: {0}",e.ProductLink));
       productCount++;
     }
   }

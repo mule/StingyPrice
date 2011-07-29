@@ -78,7 +78,7 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
                           Trace.WriteLine(String.Format("Thread {0}: Found product page link {1}",
                                                         Thread.CurrentThread.ManagedThreadId, href));
 
-                          OnFoundProduct(new ParserEventArgs(){CategoryName = parentCategoryId, ProductLink = href});
+                          OnFoundProductLink(new ParserEventArgs(){CategoryName = parentCategoryId, ProductLink = href});
                       }
                   }
 
@@ -94,7 +94,7 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
 
         }
 
-        public override Product ParseProductPage(HtmlDocument document, string parentCategoryId)
+        public override void ParseProductPage(HtmlDocument document, string parentCategoryId)
         {
 
           var prod = new Product();
@@ -119,40 +119,37 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
           {
             var priceStr = priceNode.InnerText;
 
-           var match =  Regex.Match(priceStr, @"\d+[,.]\d+");
+            var match = Regex.Match(priceStr, @"\d+[,.]\d+");
 
 
-           if (match.Success)
-             priceStr = match.Value;
-           else
-           {
-             prod.Price = double.NaN;
-             return prod;
-           }
-             
+            if (match.Success)
+            {
+              priceStr = match.Value;
+              double price;
 
-            double price;
+              if (!Double.TryParse(priceStr, NumberStyles.Currency, CultureInfo.CurrentCulture, out price))
+                if (!Double.TryParse(priceStr, NumberStyles.Any, CultureInfo.InvariantCulture, out price))
+                  price = Double.NaN;
 
 
-            if (!Double.TryParse(priceStr, NumberStyles.Currency, CultureInfo.CurrentCulture, out price))
-              if (!Double.TryParse(priceStr, NumberStyles.Any, CultureInfo.InvariantCulture, out price))
-                price = Double.NaN;
+              prod.Price = price;
 
+            }
+            else
+            {
+              prod.Price = double.NaN;
 
-            prod.Price = price;
-
+            }
           }
           else
           {
-
-              //TODO: add irregular product link handling here 
-              prod.Price = double.NaN;
+            prod.Price = double.NaN;
           }
-           
 
+
+          OnProductParsed(new ParserEventArgs(){ParentCategoryId = parentCategoryId, Product = prod});
           
-
-          return prod;
+          
 
 
         }
@@ -164,10 +161,12 @@ namespace StingyPrice.DataAcquisition.Parsers.Verkkokauppa
 
         }
 
-        protected override void OnFoundProduct(ParserEventArgs args)
+        protected override void OnFoundProductLink(ParserEventArgs args)
         {
-            base.OnFoundProduct(args);
+            base.OnFoundProductLink(args);
         }
+
+
         
 
 

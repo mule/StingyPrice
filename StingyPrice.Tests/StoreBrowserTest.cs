@@ -83,7 +83,7 @@ namespace StingyPrice.Tests
 
      
 
-            Trace.WriteLine(target.SearchResult.Categories.ToString());
+         
 
 
 
