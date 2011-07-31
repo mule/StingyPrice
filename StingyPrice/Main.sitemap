@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-3.0" enableLocalization="true">
+  <mvcSiteMapNode title="Home" controller="Home" action="Index" changeFrequency="Always" updatePriority="Normal">
+    <mvcSiteMapNode title="Browse Store" controller="Store" action="Index" />
+    <mvcSiteMapNode title="Checkout" controller="Checkout" />
+  </mvcSiteMapNode>
+</mvcSiteMap>

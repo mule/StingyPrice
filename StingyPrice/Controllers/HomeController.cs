@@ -24,5 +24,13 @@ namespace StingyPrice.Controllers {
     public ActionResult About() {
       return View();
     }
+
+
+      public JsonResult Search(string searchText)
+      {
+
+          return new JsonResult();
+
+      }
   }
 }

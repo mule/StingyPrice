@@ -2,25 +2,9 @@
 @model   StingyPrice.Models.ViewModels.CategoriesViewModel
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_StingyPageLayout.cshtml";
 
 }
 <h2>
     Categories</h2>
-@{
 
-    var menu = Html.Telerik().Menu()
-        .Name("MainMenu").BindTo(Model.Root.SubCategories, mappings => mappings.For<Category>(binding => binding
-                                                                                                             .ItemDataBound((item, category) =>
-                                                                                                                                {
-                                                                                                                                    item.Text = category.Name;
-                                                                                                                                })
-                                                                                                             .Children(category => category.SubCategories)));
-
-
-
-
-
-    menu.Render();
-    
-}
