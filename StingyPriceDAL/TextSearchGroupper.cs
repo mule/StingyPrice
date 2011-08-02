@@ -39,11 +39,12 @@ namespace StingyPriceDAL
        /// </summary>
        /// <param name="searchStr"></param>
        /// <returns> Collection of ProductGroups found by search</returns>
-       public ICollection<Product> SearchGroups(string searchStr)
+       public ICollection<Store> SearchGroups(string searchStr)
        {
        //    var result = _session.Advanced.LuceneQuery<Product>().Where(p => p.Name.Contains(searchStr));
          var query =
-           _session.Advanced.LuceneQuery<Product>().WhereContains("Name", searchStr);
+           _session.Query<Store>("ProductsByName").Where(
+             store => store.Products.Any(prod => prod.Name.Contains(searchStr)));
 
       
         

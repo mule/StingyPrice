@@ -78,9 +78,9 @@ namespace StingyPrice.Tests
          
 
             TextSearchGroupper target = new TextSearchGroupper(documentStore); 
-            string searchStr = "Acer*ICONIA";
+            string searchStr = "Acer";
        
-            ICollection<Product> actual;
+            ICollection<Store> actual;
             actual = target.SearchGroups(searchStr);
             Assert.IsNotNull(actual);
             Assert.IsTrue(actual.Count==2);
