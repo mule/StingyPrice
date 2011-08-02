@@ -1,5 +1,6 @@
-﻿using StingyPrice.DAL.Models;
-using StingyPrice.Models;
+﻿using System;
+using StingyPrice.DAL.Models;
+
 
 namespace StingyPriceDAL.Models {
   public class Product : IModel {
@@ -8,7 +9,8 @@ namespace StingyPriceDAL.Models {
       public Store Store { get; set; }
       public double Price { get; set; }
       public Category Category { get; set; }
-      public ProductGroup ProductGroup { get; set; }
+    public DateTime Created { get; set; }
+
 
 
       public override string ToString()

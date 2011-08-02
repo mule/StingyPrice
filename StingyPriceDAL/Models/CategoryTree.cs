@@ -7,39 +7,34 @@ namespace StingyPriceDAL.Models {
     public string Id { get; set; }
     public Category Root { get; set; }
 
-      public Category FindCategory(string name)
-      {
-          return Root.FindCategory(name);
+    public Category FindCategory(string name) {
+      return Root.FindCategory(name);
 
 
-      }
+    }
 
-    public bool AddProduct(Product product, string categoryName)
-    {
+    public bool AddProduct(Product product, string categoryName) {
       var cat = FindCategory(categoryName);
 
-      if (cat != null)
-      {
-        if(cat.Products==null)
-          cat.Products= new List<Product>();
+      if (cat != null) {
+        if (cat.Products == null)
+          cat.Products = new List<Product>();
         cat.Products.Add(product);
-        Trace.WriteLine(string.Format("Product {0} added to tree",product.Name));
+        Trace.WriteLine(string.Format("Product {0} added to tree", product.Name));
         return true;
-       
+
       }
-      else
-      {
-        Trace.WriteLine(string.Format("Could not find category {0} for product {1}",categoryName,product.Name));
+      else {
+        Trace.WriteLine(string.Format("Could not find category {0} for product {1}", categoryName, product.Name));
         return false;
       }
 
 
     }
 
-      public override string ToString()
-      {
-          return Root.ToString();
-      }
+    public override string ToString() {
+      return Root.ToString();
+    }
 
   }
 }

@@ -42,85 +42,137 @@ namespace SetupTestEnvironment
 
         }
 
-        public static void CreateTestStoreSearchesDataToDb(IDocumentSession session)
-        {
-            var fakeStore = new Store() { Id = "Verkkokauppa", MainPageUrl = "http://www.verkkokauppa.com", Name = "Verkkokauppa" };
 
-            var fakeStore2 = new Store() { Id = "Gigantti", MainPageUrl = "http://www.gigantti.fi", Name = "Gigantti" };
+      public static void CreateTestStoreSearchesDataToDb(IDocumentSession session)
+      {
+          var fakeStore = new Store() { Id = "Verkkokauppa", MainPageUrl = "http://www.verkkokauppa.com", Name = "Verkkokauppa" };
 
-            var fakeProd1 = new Product()
-                               {
-                                   Id = "Vekkokauppa20110801/Tietokoneet/Kannettavat/1",
-                                   Name = "Acer Aspire 8920 ",
-                                   Store = fakeStore,
-                                   Price = 400
-                               };
+          var fakeStore2 = new Store() { Id = "Gigantti", MainPageUrl = "http://www.gigantti.fi", Name = "Gigantti" };
 
 
-            var fakeProd2 = new Product()
-            {
-                Id = "Vekkokauppa20110801/Tietokoneet/Kannettavat/2",
-                Name = "Acer ICONIA",
-                Store = fakeStore,
-                Price = 600
-            };
-            var fakeProd3 = new Product()
-            {
-                Id = "Vekkokauppa20110801/Kannettavat/3",
-                Name = "HP Compaq 620",
-                Store = fakeStore,
-                Price = 200
-            };
+          var fakeProd1 = new Product() {
+            Id = "Vekkokauppa20110801/Tietokoneet/Kannettavat/1",
+            Name = "Acer Aspire 8920 ",
+            Store = fakeStore,
+            Price = 400,
+            Created =  DateTime.Now
+
+          };
 
 
-            var testCat1 = new Category() { Id = "Vekkokauppa20110801/Tietokoneet/Kannettavat", Name = "Kannettavat", Products = new List<Product>(){fakeProd1,fakeProd2}};
-            var testCat2 = new Category()
-                               {
-                                   Id = "Gigantti31072011/Tietokoneet/Kannettavat",
-                                   Name = "Kannettavat",
-                                   Products = new List<Product> {fakeProd3}
-                               };
+          var fakeProd2 = new Product() {
+            Id = "Vekkokauppa20110801/Tietokoneet/Kannettavat/2",
+            Name = "Acer ICONIA",
+            Store = fakeStore,
+            Price = 600,
+             Created =  DateTime.Now
+          };
+          var fakeProd3 = new Product() {
+            Id = "Vekkokauppa20110801/Kannettavat/3",
+            Name = "HP Compaq 620",
+            Store = fakeStore,
+            Price = 200,
+             Created =  DateTime.Now
+          };
+
+          var fakeProd4 = new Product() {
+            Id = "Gigantti20110801/Tietokoneet/Kannettavat/2",
+            Name = "Acer ICONIA",
+            Store = fakeStore2,
+            Price = 800,
+             Created =  DateTime.Now
+          };
 
 
-           session.Store(testCat1);
-           session.Store(testCat2);
-            session.SaveChanges();
+        session.Store(fakeProd1);
+        session.Store(fakeProd2);
+        session.Store(fakeProd3);
+        session.Store(fakeProd4);
 
-
-        }
-
-
-        public static void StoreCategoryDataToDb(IDocumentSession session)
-        {
-            var doc = new XmlDocument();
-            var categoryNameList = new List<string>();
-            var catTree = new CategoryTree() { Root = new Category() { Name = "Root", SubCategories = new List<Category>() } };
+        session.SaveChanges();
 
 
 
-
-            doc.Load(@"kategoriat.xml");
-
-            var nodes = doc.SelectNodes(@"//dbo.Tuote[SisaltaaKategorioita='1' ]");
-
-            foreach (XmlNode node in nodes)
-            {
-
-                if (node.InnerText.Split(' ')[0].EndsWith("1"))
-                    categoryNameList.Add(node.InnerText.TrimEnd('1'));
-            }
+      }
 
 
-            foreach (string catName in categoryNameList)
-            {
-                Trace.WriteLine(catName);
-                catTree.Root.SubCategories.Add(new Category() { Name = catName });
 
-            }
+        //public static void CreateTestStoreSearchesDataToDb(IDocumentSession session)
+        //{
+        //    var fakeStore = new Store() { Id = "Verkkokauppa", MainPageUrl = "http://www.verkkokauppa.com", Name = "Verkkokauppa" };
 
-            session.Store(catTree);
-            session.SaveChanges();
-        }
+        //    var fakeStore2 = new Store() { Id = "Gigantti", MainPageUrl = "http://www.gigantti.fi", Name = "Gigantti" };
+
+      //var fakeProd1 = new Product() {
+      //  Id = "Vekkokauppa20110801/Tietokoneet/Kannettavat/1",
+      //  Name = "Acer Aspire 8920 ",
+      //  Store = fakeStore,
+      //  Price = 400
+      //};
+
+
+      //var fakeProd2 = new Product() {
+      //  Id = "Vekkokauppa20110801/Tietokoneet/Kannettavat/2",
+      //  Name = "Acer ICONIA",
+      //  Store = fakeStore,
+      //  Price = 600
+      //};
+      //var fakeProd3 = new Product() {
+      //  Id = "Vekkokauppa20110801/Kannettavat/3",
+      //  Name = "HP Compaq 620",
+      //  Store = fakeStore,
+      //  Price = 200
+      //};
+
+
+        //    var testCat1 = new Category() { Id = "Vekkokauppa20110801/Tietokoneet/Kannettavat", Name = "Kannettavat", Products = new List<Product>(){fakeProd1,fakeProd2}};
+        //    var testCat2 = new Category()
+        //                       {
+        //                           Id = "Gigantti31072011/Tietokoneet/Kannettavat",
+        //                           Name = "Kannettavat",
+        //                           Products = new List<Product> {fakeProd3}
+        //                       };
+
+
+        //   session.Store(testCat1);
+        //   session.Store(testCat2);
+        //    session.SaveChanges();
+
+
+        //}
+
+
+        //public static void StoreCategoryDataToDb(IDocumentSession session)
+        //{
+        //    var doc = new XmlDocument();
+        //    var categoryNameList = new List<string>();
+        //    var catTree = new CategoryTree() { Root = new Category() { Name = "Root", SubCategories = new List<Category>() } };
+
+
+
+
+        //    doc.Load(@"kategoriat.xml");
+
+        //    var nodes = doc.SelectNodes(@"//dbo.Tuote[SisaltaaKategorioita='1' ]");
+
+        //    foreach (XmlNode node in nodes)
+        //    {
+
+        //        if (node.InnerText.Split(' ')[0].EndsWith("1"))
+        //            categoryNameList.Add(node.InnerText.TrimEnd('1'));
+        //    }
+
+
+        //    foreach (string catName in categoryNameList)
+        //    {
+        //        Trace.WriteLine(catName);
+        //        catTree.Root.SubCategories.Add(new Category() { Name = catName });
+
+        //    }
+
+        //    session.Store(catTree);
+        //    session.SaveChanges();
+        //}
 
     }
 

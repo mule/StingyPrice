@@ -77,8 +77,8 @@ namespace StingyPrice.Tests
             documentStore.Initialize();
          
 
-            TextSearchGroupper target = new TextSearchGroupper(documentStore); // TODO: Initialize to an appropriate value
-            string searchStr = "Acer";
+            TextSearchGroupper target = new TextSearchGroupper(documentStore); 
+            string searchStr = "Acer*ICONIA";
        
             ICollection<Product> actual;
             actual = target.SearchGroups(searchStr);

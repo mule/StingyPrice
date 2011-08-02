@@ -57,6 +57,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Raven.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL" />
     <Reference Include="Raven.Client.Lightweight">
       <HintPath>..\lib\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
@@ -70,7 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\CategoryTree.cs" />
+    <Compile Include="Models\CategoryTree.cs">
+      <Tags>To be removed</Tags>
+    </Compile>
     <Compile Include="Models\IModel.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Product.cs" />

@@ -4,9 +4,10 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
+using Raven.Abstractions.Indexing;
 using Raven.Client;
 using Raven.Client.Document;
-using StingyPrice.Models;
+
 using StingyPriceDAL.Models;
 
 namespace StingyPriceDAL
@@ -22,7 +23,13 @@ namespace StingyPriceDAL
             Contract.Requires(docStore!=null);
 
             _store = docStore;
+          
             _session = docStore.OpenSession();
+
+
+
+          
+           
 
         }
 
@@ -35,7 +42,11 @@ namespace StingyPriceDAL
        public ICollection<Product> SearchGroups(string searchStr)
        {
        //    var result = _session.Advanced.LuceneQuery<Product>().Where(p => p.Name.Contains(searchStr));
-           var query = _session.Query<Product>().Where(prod => prod.Name.Contains(searchStr));
+         var query =
+           _session.Advanced.LuceneQuery<Product>().WhereContains("Name", searchStr);
+
+      
+        
            return query.ToList();
        }
     }
