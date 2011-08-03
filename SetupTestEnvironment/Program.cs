@@ -43,6 +43,56 @@ namespace SetupTestEnvironment
         }
 
 
+        //public static void CreateTestStoreSearchesDataToDb(IDocumentSession session) {
+        //  var fakeStore = new Store() { Id = "Verkkokauppa", MainPageUrl = "http://www.verkkokauppa.com", Name = "Verkkokauppa" };
+
+        //  var fakeStore2 = new Store() { Id = "Gigantti", MainPageUrl = "http://www.gigantti.fi", Name = "Gigantti" };
+
+
+        //  var fakeProd1 = new Product() {
+        //    Id = "Vekkokauppa/Tietokoneet/Kannettavat/1",
+        //    Name = "Acer Aspire 8920 ",
+        //    Price = 400,
+        //    Created = DateTime.Now
+
+        //  };
+
+
+        //  var fakeProd2 = new Product() {
+        //    Id = "Vekkokauppa/Tietokoneet/Kannettavat/2",
+        //    Name = "Acer ICONIA",           
+        //    Price = 600,
+        //    Created = DateTime.Now
+        //  };
+        //  var fakeProd3 = new Product() {
+        //    Id = "Vekkokauppa/Kannettavat/3",
+        //    Name = "HP Compaq 620",
+
+        //    Price = 200,
+        //    Created = DateTime.Now
+        //  };
+
+        //  var fakeProd4 = new Product() {
+        //    Id = "Gigantti/Tietokoneet/Kannettavat/2",
+        //    Name = "Acer ICONIA",
+        //    Price = 800,
+        //    Created = DateTime.Now
+        //  };
+
+        //  fakeStore.Products = new List<Product> {fakeProd1, fakeProd2, fakeProd3};
+        //  fakeStore2.Products = new List<Product> {fakeProd4};
+
+
+        //  session.Store(fakeStore);
+        //  session.Store(fakeStore2);
+
+        //  session.SaveChanges();
+
+
+
+        //}
+
+
         public static void CreateTestStoreSearchesDataToDb(IDocumentSession session) {
           var fakeStore = new Store() { Id = "Verkkokauppa", MainPageUrl = "http://www.verkkokauppa.com", Name = "Verkkokauppa" };
 
@@ -50,8 +100,9 @@ namespace SetupTestEnvironment
 
 
           var fakeProd1 = new Product() {
-            Id = "Vekkokauppa/Tietokoneet/Kannettavat/1",
+            Id = "Vekkokauppa20110801/Tietokoneet/Kannettavat/1",
             Name = "Acer Aspire 8920 ",
+            Store = fakeStore,
             Price = 400,
             Created = DateTime.Now
 
@@ -59,91 +110,39 @@ namespace SetupTestEnvironment
 
 
           var fakeProd2 = new Product() {
-            Id = "Vekkokauppa/Tietokoneet/Kannettavat/2",
-            Name = "Acer ICONIA",           
+            Id = "Vekkokauppa20110801/Tietokoneet/Kannettavat/2",
+            Name = "Acer ICONIA",
+            Store = fakeStore,
             Price = 600,
             Created = DateTime.Now
           };
           var fakeProd3 = new Product() {
-            Id = "Vekkokauppa/Kannettavat/3",
+            Id = "Vekkokauppa20110801/Kannettavat/3",
             Name = "HP Compaq 620",
-
+            Store = fakeStore,
             Price = 200,
             Created = DateTime.Now
           };
 
           var fakeProd4 = new Product() {
-            Id = "Gigantti/Tietokoneet/Kannettavat/2",
+            Id = "Gigantti20110801/Tietokoneet/Kannettavat/2",
             Name = "Acer ICONIA",
+            Store = fakeStore2,
             Price = 800,
             Created = DateTime.Now
           };
 
-          fakeStore.Products = new List<Product> {fakeProd1, fakeProd2, fakeProd3};
-          fakeStore2.Products = new List<Product> {fakeProd4};
 
-
-          session.Store(fakeStore);
-          session.Store(fakeStore2);
+          session.Store(fakeProd1);
+          session.Store(fakeProd2);
+          session.Store(fakeProd3);
+          session.Store(fakeProd4);
 
           session.SaveChanges();
 
 
 
         }
-
-
-      //public static void CreateTestStoreSearchesDataToDb(IDocumentSession session)
-      //{
-      //    var fakeStore = new Store() { Id = "Verkkokauppa", MainPageUrl = "http://www.verkkokauppa.com", Name = "Verkkokauppa" };
-
-      //    var fakeStore2 = new Store() { Id = "Gigantti", MainPageUrl = "http://www.gigantti.fi", Name = "Gigantti" };
-
-
-      //    var fakeProd1 = new Product() {
-      //      Id = "Vekkokauppa20110801/Tietokoneet/Kannettavat/1",
-      //      Name = "Acer Aspire 8920 ",
-      //      Store = fakeStore,
-      //      Price = 400,
-      //      Created =  DateTime.Now
-
-      //    };
-
-
-      //    var fakeProd2 = new Product() {
-      //      Id = "Vekkokauppa20110801/Tietokoneet/Kannettavat/2",
-      //      Name = "Acer ICONIA",
-      //      Store = fakeStore,
-      //      Price = 600,
-      //       Created =  DateTime.Now
-      //    };
-      //    var fakeProd3 = new Product() {
-      //      Id = "Vekkokauppa20110801/Kannettavat/3",
-      //      Name = "HP Compaq 620",
-      //      Store = fakeStore,
-      //      Price = 200,
-      //       Created =  DateTime.Now
-      //    };
-
-      //    var fakeProd4 = new Product() {
-      //      Id = "Gigantti20110801/Tietokoneet/Kannettavat/2",
-      //      Name = "Acer ICONIA",
-      //      Store = fakeStore2,
-      //      Price = 800,
-      //       Created =  DateTime.Now
-      //    };
-
-
-      //  session.Store(fakeProd1);
-      //  session.Store(fakeProd2);
-      //  session.Store(fakeProd3);
-      //  session.Store(fakeProd4);
-
-      //  session.SaveChanges();
-
-
-
-      //}
 
 
 

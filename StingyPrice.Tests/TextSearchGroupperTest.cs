@@ -1,4 +1,5 @@
-﻿using StingyPriceDAL;
+﻿using System.Collections;
+using StingyPriceDAL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Raven.Client.Document;
@@ -68,7 +69,7 @@ namespace StingyPrice.Tests
 
 
         /// <summary>
-        ///A test for SearchGroups
+        ///A test for SearchStoreProductGroups
         ///</summary>
         [TestMethod()]
         public void SearchGroupsTest()
@@ -77,11 +78,11 @@ namespace StingyPrice.Tests
             documentStore.Initialize();
          
 
-            TextSearchGroupper target = new TextSearchGroupper(documentStore); 
-            string searchStr = "Acer";
+            ProductGroupper target = new ProductGroupper(documentStore); 
+            string searchStr = "Acer*";
        
-            ICollection<Store> actual;
-            actual = target.SearchGroups(searchStr);
+            Dictionary<string,List<Product>> actual;
+            actual = target.SearchStoreProductGroups(searchStr);
             Assert.IsNotNull(actual);
             Assert.IsTrue(actual.Count==2);
 
