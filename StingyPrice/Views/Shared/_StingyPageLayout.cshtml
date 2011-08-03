@@ -4,7 +4,12 @@
     Layout = "_StingyMasterLayout.cshtml";
 }
 @section SearchBox{
-    @Html.TextBox("txtName");
+@using (Html.BeginForm("Search", "Categories"))
+{
+
+    @Html.TextBox("txtSearchStr")
+    
+}
 }
 @section CategoryMenuBox {
     @{

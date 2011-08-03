@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using StingyPrice.Models.ViewModels;
+using StingyPriceDAL;
 using StingyPriceDAL.Models;
 using StingyPriceDAL.Repositories;
 using Telerik.Web.Mvc;
@@ -53,6 +54,14 @@ namespace StingyPrice.Controllers
 
             return View(vm);
         }
+
+        public ActionResult Search(string searchStr)
+        {
+_
+
+        }
+
+
 
     }
 }

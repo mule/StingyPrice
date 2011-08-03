@@ -40,5 +40,33 @@ namespace StingyPriceDAL.Repositories {
     public void Save() {
       _session.SaveChanges();
     }
+
+
+    public Dictionary<string, List<Product>> SearchStoreProductGroups(string searchStr)
+    {
+        var productGroups = new Dictionary<string, List<Product>>();
+        var result =
+          _session.Advanced.LuceneQuery<Product>("ProductsByName").WhereContains("Name", searchStr);
+
+        if (result != null)
+            foreach (Product prod in result)
+            {
+                if (prod.Store != null)
+                {
+                    if (productGroups.ContainsKey(prod.Store.Name))
+                        productGroups[prod.Store.Name].Add(prod);
+                    else
+                    {
+                        productGroups.Add(prod.Store.Name, new List<Product>() { prod });
+
+                    }
+                }
+
+
+            }
+
+
+        return productGroups;
+    }
   }
 }
