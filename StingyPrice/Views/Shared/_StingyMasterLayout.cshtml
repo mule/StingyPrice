@@ -9,15 +9,15 @@
 @(Html.Telerik().StyleSheetRegistrar().DefaultGroup(group => group.Add("telerik.common.css").Add("telerik.windows7.css").Combined(true).Compress(true)))
 </head>
 <body>
-<div id="SearchBox">
+<section id="SearchBox">
 @RenderSection("SearchBox")
-</div>
-<div id="categoryMenuBox">
+</section>
+<section id="categoryMenuBox">
 @RenderSection("CategoryMenuBox")
-</div>
-    <div>
+</section>
+    <section id="main">
         @RenderBody()
-    </div>
+    </section>
     @(Html.Telerik().ScriptRegistrar().Globalization(true).DefaultGroup(group => group.Combined(true).Compress(true)))
 </body>
 

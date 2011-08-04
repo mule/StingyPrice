@@ -16,24 +16,27 @@ namespace StingyPrice.Controllers
         public CategoriesController()
         {
 
+
         }
 
-        public CategoriesController(IRepository repository)
+        public CategoriesController(IRepository repository) : this()
         {
+         
             _repository = repository;
 
+            var catTree = _repository.All<CategoryTree>().FirstOrDefault();
+
+
+
+            if (catTree != null)
+              ViewBag.CategoryTree = catTree.Root;
         }
         //
         // GET: /Categories/
          
         public ActionResult Index()
         {
-            var catTree = _repository.All<CategoryTree>().FirstOrDefault();
 
-            var vm = new CategoriesViewModel() {Root = catTree.Root};
-
-            if (catTree != null)
-                ViewBag.CategoryTree = catTree.Root;
 
             
 
@@ -52,14 +55,10 @@ namespace StingyPrice.Controllers
 
 
 
-            return View(vm);
+            return View();
         }
 
-        public ActionResult Search(string searchStr)
-        {
-_
-
-        }
+     
 
 
 
