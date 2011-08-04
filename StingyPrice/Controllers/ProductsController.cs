@@ -24,12 +24,17 @@ namespace StingyPrice.Controllers
          
             _repository = repository;
 
-            var catTree = _repository.All<CategoryTree>().FirstOrDefault();
+
+            if (ViewBag.CategoryTree == null)
+            {
+
+                var catTree = _repository.All<CategoryTree>().FirstOrDefault();
 
 
 
-            if (catTree != null)
-              ViewBag.CategoryTree = catTree.Root;
+                if (catTree != null)
+                    ViewBag.CategoryTree = catTree.Root;
+            }
         }
         //
         // GET: /Products/

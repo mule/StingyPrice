@@ -2,14 +2,24 @@
 @using StingyPriceDAL.Models
 @model   StingyPrice.Models.ViewModels.ProductSearchViewModel
 @{
-  ViewBag.Title = "Search";
-  Layout = "~/Views/Shared/_StingyPageLayout.cshtml";
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_StingyPageLayout.cshtml";
 }
 <h2>
-  Search</h2>
+    Search</h2>
 <div id="SearchResultBox">
-  @{ Html.Telerik().Grid<ProductSearchViewModel>()
-  .Name("Grid")
-  .Columns(columns => columns.Bound(o => o.StoreProducts.Keys).Title("Store")).Render(); 
-  }
+    @foreach (string key in Model.StoreProducts.Keys)
+    {
+    
+        <div class="StoreColumn">
+            @key
+            @foreach (Product prod in Model.StoreProducts[key])
+            {
+                <div class="ProductColumn">
+                    @prod.Name
+                </div>
+                        
+            }
+        </div>
+    }
 </div>
