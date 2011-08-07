@@ -1,0 +1,15 @@
+{
+  "Name": "AlbumsByCountSold",
+  "Map": "from album in docs.Albums\nselect new { album.CountSold };",
+  "Reduce": null,
+  "TransformResults": null,
+  "IsMapReduce": false,
+  "IsCompiled": false,
+  "IsTemp": false,
+  "Stores": {},
+  "Indexes": {},
+  "SortOptions": {},
+  "Analyzers": {},
+  "Fields": [],
+  "Type": "Map"
+}

@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Xml;
 using Raven.Client;
-using StingyPrice.DataAcquisition;
-using StingyPrice.DataAcquisition.Parsers.Verkkokauppa;
 using StingyPriceDAL.Models;
 
 namespace SetupTestEnvironment
@@ -29,18 +22,18 @@ namespace SetupTestEnvironment
 
 
 
-        public static void FetchTestStoreDataToDb(IDocumentSession session)
-        {
-            var browser = new StoreBrowser();
+        //public static void FetchTestStoreDataToDb(IDocumentSession session)
+        //{
+        //    var browser = new StoreBrowser();
 
-            browser.BrowseStore(new VerkkokauppaParser(), new Store() { MainPageUrl = @"http://www.verkkokauppa.com", Name = "Verkkokauppa" });
+        //    browser.BrowseStore(new VerkkokauppaParser(), new Store() { MainPageUrl = @"http://www.verkkokauppa.com", Name = "Verkkokauppa" });
 
-            //session.Store(browser.SearchResult);
-
-
+        //    //session.Store(browser.SearchResult);
 
 
-        }
+
+
+        //}
 
 
         //public static void CreateTestStoreSearchesDataToDb(IDocumentSession session) {
