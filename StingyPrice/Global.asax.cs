@@ -32,9 +32,10 @@ namespace StingyPrice {
     protected void Application_Start() {
 // ReSharper restore InconsistentNaming
       AreaRegistration.RegisterAllAreas();
-
+      
       RegisterGlobalFilters(GlobalFilters.Filters);
       RegisterRoutes(RouteTable.Routes);
+    
 
       //var documentStore = new Raven.Client.Document.DocumentStore { Url = "http://localhost:8080", DefaultDatabase = "TestDB"};
         var documentStore = new EmbeddableDocumentStore {DataDirectory = @"~\App_Data", UseEmbeddedHttpServer = true, DefaultDatabase = "TestDB"};

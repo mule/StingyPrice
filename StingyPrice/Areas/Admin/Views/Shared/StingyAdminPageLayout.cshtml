@@ -1,0 +1,19 @@
+﻿@using Telerik.Web.Mvc.UI
+@{
+    ViewBag.Title = "StingyAdminPage";
+    Layout = "~/Areas/Admin/Views/Shared/StingyAdminMasterLayout.cshtml";
+}
+
+<h2>StingyAdminPage</h2>
+
+@section MainMenu{
+
+@{
+  Html.Telerik().Menu().Name("AdminMainMenu").Items(item => item.Add().Text("Stores"));
+  
+
+}
+
+
+
+}
