@@ -1,8 +1,7 @@
 ﻿using System.Diagnostics;
+using StingyPrice.DAL.Models;
 using StingyPrice.DataAcquisition;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using StingyPriceDAL.Models;
 
 namespace StingyPrice.Tests
 {

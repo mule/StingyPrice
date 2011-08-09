@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using StingyPrice.DAL.Models;
 
-namespace StingyPriceDAL.Models {
+namespace StingyPrice.DAL.Models {
   public class CategoryTree : IModel {
     public string Id { get; set; }
     public Category Root { get; set; }

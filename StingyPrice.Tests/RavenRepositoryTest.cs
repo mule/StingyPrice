@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StingyPriceDAL.Models;
-using StingyPriceDAL.Repositories;
+using StingyPrice.DAL.Models;
+using StingyPrice.DAL.Repositories;
 
 namespace StingyPrice.Tests {
 
@@ -16,7 +16,8 @@ namespace StingyPrice.Tests {
 
 
     private TestContext testContextInstance;
-    private static CategoryTree _testData;
+      private static CategoryTree _testData;
+      private static RavenTestHelpper _helpper;
 
     /// <summary>
     ///Gets or sets the test context which provides
@@ -69,10 +70,9 @@ namespace StingyPrice.Tests {
     [TestMethod()]
     public void AddTest() {
 
-      var docStore = new Raven.Client.Document.DocumentStore { Url = "http://localhost:8080", DefaultDatabase =  "UnitTestDB"};
-      docStore.Initialize();
-      var rep = new RavenRepository(docStore);
-      createTestData();
+
+      var rep = new RavenRepository(_helpper.DocumentStore);
+     createTestData();
       rep.Add<CategoryTree>(_testData);
       rep.Save();
 
@@ -106,21 +106,23 @@ namespace StingyPrice.Tests {
 
     private static void deleteTestData()
     {
-      var docStore = new Raven.Client.Document.DocumentStore { Url = "http://localhost:8080" };
-      docStore.Initialize();
 
-      var session = docStore.OpenSession();
-      var categorytrees = session.Query<CategoryTree>();
 
-      foreach (var categoryTree in categorytrees)
-      {
-        session.Delete(categoryTree);
-      }
+        using (var session = _helpper.DocumentStore.OpenSession())
+        {
+            var categorytrees = session.Query<CategoryTree>();
 
-      session.SaveChanges();
-   
+            foreach (var categoryTree in categorytrees)
+            {
+                session.Delete(categoryTree);
+            }
 
-      
+            session.SaveChanges();
+
+            Assert.IsTrue(session.Query<CategoryTree>().Count() == 0);
+        }
+
+
     }
   }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using StingyPrice.DAL.Models;
 
-namespace StingyPriceDAL.Models {
+namespace StingyPrice.DAL.Models {
   public class Store : IModel
   {
     public string Id { get; set; }

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading;
 using HtmlAgilityPack;
+using StingyPrice.DAL.Models;
 using StingyPrice.DataAcquisition.Parsers;
 using StingyPriceDAL.Models;
 

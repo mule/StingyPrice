@@ -2,7 +2,7 @@
 using Raven.Client.Linq;
 using StingyPrice.DAL.Models;
 
-namespace StingyPriceDAL.Repositories
+namespace StingyPrice.DAL.Repositories
 {
     public interface IRepository
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using StingyPrice.DAL.Models;
 
-namespace StingyPriceDAL.Models
+namespace StingyPrice.DAL.Models
 {
     public class StoreSearch : IModel
     {

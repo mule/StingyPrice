@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
-using StingyPrice.Models.ViewModels;
-using StingyPriceDAL;
-using StingyPriceDAL.Models;
-using StingyPriceDAL.Repositories;
-using Telerik.Web.Mvc;
+using StingyPrice.DAL.Models;
+using StingyPrice.DAL.Repositories;
 
 namespace StingyPrice.Controllers
 {

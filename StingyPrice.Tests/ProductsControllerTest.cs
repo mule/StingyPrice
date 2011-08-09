@@ -1,9 +1,7 @@
-﻿using StingyPrice.Controllers;
+﻿using System.Web.Mvc;
+using StingyPrice.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
-using System.Web.Mvc;
-using StingyPriceDAL.Repositories;
+using StingyPrice.DAL.Repositories;
 
 namespace StingyPrice.Tests
 {
@@ -18,6 +16,7 @@ namespace StingyPrice.Tests
 
 
     private TestContext testContextInstance;
+        private static RavenTestHelpper _helpper;
 
     /// <summary>
     ///Gets or sets the test context which provides
@@ -37,10 +36,14 @@ namespace StingyPrice.Tests
     //You can use the following additional attributes as you write your tests:
     //
     //Use ClassInitialize to run code before running the first test in the class
-    //[ClassInitialize()]
-    //public static void MyClassInitialize(TestContext testContext)
-    //{
-    //}
+    [ClassInitialize()]
+    public static void MyClassInitialize(TestContext testContext)
+    {
+        _helpper = new RavenTestHelpper();
+        
+
+
+    }
     //
     //Use ClassCleanup to run code after all tests in a class have run
     //[ClassCleanup()]
@@ -62,6 +65,8 @@ namespace StingyPrice.Tests
     //
     #endregion
 
+    
+
 
     /// <summary>
     ///A test for Search
@@ -75,14 +80,16 @@ namespace StingyPrice.Tests
     //[UrlToTest("http://localhost:57460/")]
     public void SearchTest()
     {
-      var docStore = new Raven.Client.Document.DocumentStore { Url = "http://localhost:8080", DefaultDatabase = "TestDB" };
-      docStore.Initialize();
-      RavenRepository repository = new RavenRepository(docStore);
+      
+
+      IRepository repository = new RavenRepository(_helpper.DocumentStore);
+        _helpper.AddTestData();
       ProductsController target = new ProductsController(repository); // TODO: Initialize to an appropriate value
       string searchStr = "Acer*";
       ActionResult actual;
       actual = target.Search(searchStr);
-      Assert.IsNotNull(actual); //TODO: Improve assert here
+      Assert.IsNotNull(actual); //TODO: Improve assert
+    
 
     }
   }

@@ -8,7 +8,7 @@ using Raven.Client.Linq;
 using StingyPrice.DAL.Models;
 using StingyPriceDAL.Models;
 
-namespace StingyPriceDAL.Repositories {
+namespace StingyPrice.DAL.Repositories {
   public class RavenRepository : IRepository {
     private EmbeddableDocumentStore _store;
     private IDocumentSession _session;

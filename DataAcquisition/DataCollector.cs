@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using Raven.Client;
 using Raven.Client.Document;
+using StingyPrice.DAL.Models;
 using StingyPrice.DataAcquisition.Parsers;
 using StingyPrice.DataAcquisition.Parsers.Verkkokauppa;
-using StingyPriceDAL.Models;
-using StingyPriceDAL.Repositories;
 
 namespace StingyPrice.DataAcquisition {
   public class DataCollector {

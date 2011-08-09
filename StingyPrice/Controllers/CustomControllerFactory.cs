@@ -2,7 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using Raven.Client.Embedded;
-using StingyPriceDAL.Repositories;
+using StingyPrice.DAL.Repositories;
 
 namespace StingyPrice.Controllers
 {

@@ -2,7 +2,7 @@
 using StingyPrice.DAL.Models;
 
 
-namespace StingyPriceDAL.Models {
+namespace StingyPrice.DAL.Models {
   public class Product : IModel {
       public string Id { get; set; }
       public string Name { get; set; }

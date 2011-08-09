@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using StingyPriceDAL.Repositories;
+using StingyPrice.DAL.Repositories;
 
 namespace StingyPrice.Controllers {
   public class HomeController : Controller

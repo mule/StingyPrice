@@ -10,7 +10,7 @@ using Raven.Abstractions.Indexing;
 using Raven.Client;
 using Raven.Client.Document;
 
-using StingyPriceDAL.Models;
+using StingyPrice.DAL.Models;
 
 namespace StingyPriceDAL
 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using Raven.Client;
-using StingyPriceDAL.Models;
+using StingyPrice.DAL.Models;
+
 
 namespace SetupTestEnvironment
 {
