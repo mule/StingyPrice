@@ -70,9 +70,6 @@
       <HintPath>..\packages\RavenDB-Embedded.1.0.0.427\lib\net40\Lucene.Net.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL" />
-    <Reference Include="Raven.Client.Embedded">
-      <HintPath>..\packages\RavenDB-Embedded.1.0.0.427\lib\net40\Raven.Client.Embedded.dll</HintPath>
-    </Reference>
     <Reference Include="Raven.Client.Lightweight, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
       <HintPath>..\packages\RavenDB-Embedded.1.0.0.427\lib\net40\Raven.Client.Lightweight.dll</HintPath>
     </Reference>

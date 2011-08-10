@@ -4,8 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Raven.Client.Embedded;
-using Raven.Http;
+using Raven.Client;
+using Raven.Client.Document;
+
 using StingyPrice.Controllers;
 
 namespace StingyPrice {
@@ -35,12 +36,22 @@ namespace StingyPrice {
       
       RegisterGlobalFilters(GlobalFilters.Filters);
       RegisterRoutes(RouteTable.Routes);
-    
 
-      //var documentStore = new Raven.Client.Document.DocumentStore { Url = "http://localhost:8080", DefaultDatabase = "TestDB"};
-        var documentStore = new EmbeddableDocumentStore {DataDirectory = @"~\App_Data", UseEmbeddedHttpServer = true, DefaultDatabase = "TestDB"};
-        NonAdminHttp.EnsureCanListenToWhenInNonAdminContext(8080);
+
+//var documentStore = DocumentStore(){ Url = "http://localhost:8080", DefaultDatabase = "TestDB" };
+
+      var documentStore = new DocumentStore() {Url = "http://localhost:8080", DefaultDatabase = "TestDB"};
+
+  
+
+        //var documentStore = new EmbeddableDocumentStore {DataDirectory = @"~\App_Data", UseEmbeddedHttpServer = true, DefaultDatabase = "TestDB"};
+
       documentStore.Initialize();
+
+
+
+
+
       Application["DocumentStore"] = documentStore;
       ControllerBuilder.Current.SetControllerFactory(typeof(CustomControllerFactory));
     }
